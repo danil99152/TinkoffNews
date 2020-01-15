@@ -9,8 +9,4 @@ public class PublicationDate {
     public long getMilliseconds() {
         return milliseconds;
     }
-
-    public void setMilliseconds(Integer milliseconds) {
-        this.milliseconds = milliseconds;
-    }
 }

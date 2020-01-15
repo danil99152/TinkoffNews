@@ -16,8 +16,4 @@ public class CreationDate implements Serializable {
     public long getMilliseconds() {
         return milliseconds;
     }
-
-    public void setMilliseconds(Integer milliseconds) {
-        this.milliseconds = milliseconds;
-    }
 }

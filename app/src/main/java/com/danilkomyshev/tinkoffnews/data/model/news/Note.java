@@ -57,16 +57,8 @@ public class Note implements Serializable {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public long getPublicationDate() {
         return publicationDate.getMilliseconds();
-    }
-
-    public void setPublicationDate(PublicationDate publicationDate) {
-        this.publicationDate = publicationDate;
     }
 
     public Integer getBankInfoTypeId() {

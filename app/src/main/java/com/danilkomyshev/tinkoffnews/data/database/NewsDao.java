@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.danilkomyshev.tinkoffnews.data.model.content.Content;
-import com.danilkomyshev.tinkoffnews.data.model.content.Title;
 import com.danilkomyshev.tinkoffnews.data.model.news.Note;
 
 import java.util.List;
@@ -24,8 +23,4 @@ public interface NewsDao {
 
     @Query("select * from content")
     Content getContentById();
-
-
-    @Query("select * from title")
-    Title getTitleById();
 }

@@ -52,24 +52,12 @@ public class Content {
         return title;
     }
 
-    public void setTitle(Title title) {
-        this.title = title;
-    }
-
     public CreationDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(CreationDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
     public LastModificationDate getLastModificationDate() {
         return lastModificationDate;
-    }
-
-    public void setLastModificationDate(LastModificationDate lastModificationDate) {
-        this.lastModificationDate = lastModificationDate;
     }
 
     public String getContent() {

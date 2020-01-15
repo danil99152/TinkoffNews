@@ -46,7 +46,7 @@ public class ContentFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mStorage = context instanceof Storage.StorageOwner ? ((Storage.StorageOwner) context).obtainStorage() : null;
     }
@@ -71,7 +71,7 @@ public class ContentFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if (getActivity() != null) {
-            getActivity().setTitle("Content");
+            getActivity().setTitle("Новость");
         }
 
         if (getArguments() != null) {

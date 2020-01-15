@@ -15,8 +15,4 @@ public class PublicationDate implements Serializable {
     long getMilliseconds() {
         return milliseconds;
     }
-
-    public void setMilliseconds(long milliseconds) {
-        this.milliseconds = milliseconds;
-    }
 }

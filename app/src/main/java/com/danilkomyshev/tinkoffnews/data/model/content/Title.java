@@ -2,7 +2,6 @@ package com.danilkomyshev.tinkoffnews.data.model.content;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
@@ -22,13 +21,9 @@ public class Title {
     @SerializedName("text")
     private String text;
 
-    @SerializedName("publicationDate")
-    @Ignore
-    private PublicationDate publicationDate;
-
-    @SerializedName("bankInfoTypeId")
-    @Ignore
-    private Integer bankInfoTypeId;
+    public Title(String text) {
+        this.text = text;
+    }
 
     public int getId() {
         return id;
@@ -50,23 +45,4 @@ public class Title {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public PublicationDate getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(PublicationDate publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
-    public Integer getBankInfoTypeId() {
-        return bankInfoTypeId;
-    }
-
-    public void setBankInfoTypeId(Integer bankInfoTypeId) {
-        this.bankInfoTypeId = bankInfoTypeId;
-    }
 }
