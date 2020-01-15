@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danilkomyshev.tinkoffnews.R;
-import com.danilkomyshev.tinkoffnews.data.model.Note;
+import com.danilkomyshev.tinkoffnews.data.model.news.Note;
 import com.danilkomyshev.tinkoffnews.utils.DateUtils;
 
 class NewsHolder extends RecyclerView.ViewHolder {
@@ -21,8 +21,13 @@ class NewsHolder extends RecyclerView.ViewHolder {
         mPublicationDate = itemView.findViewById(R.id.tv_publicaton);
     }
 
-    void bind(Note item) {
+    void bind(Note item, NewsAdapter.OnItemClickListener onItemClickListener) {
         mText.setText(item.getText());
         mPublicationDate.setText(DateUtils.format(item.getPublicationDate()));
+        if (onItemClickListener != null) {
+            itemView.setOnClickListener(v->onItemClickListener.OnItemClick(
+                    item.getId()
+            ));
+        }
     }
 }

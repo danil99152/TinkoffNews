@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.danilkomyshev.tinkoffnews.R;
-import com.danilkomyshev.tinkoffnews.data.model.Note;
+import com.danilkomyshev.tinkoffnews.data.model.news.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,13 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
 
     private final List<Note> mNews = new ArrayList<>();
+    private final OnItemClickListener mOnItemClickListener;
+
+    private int mId;
+
+    NewsAdapter(RecyclerFragment onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
 
     @NonNull
     @Override
@@ -28,7 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
     @Override
     public void onBindViewHolder(@NonNull NewsHolder newsHolder, int position) {
         Note note = mNews.get(position);
-        newsHolder.bind(note);
+        newsHolder.bind(note, (OnItemClickListener) mOnItemClickListener);
     }
 
     @Override
@@ -40,5 +47,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
         mNews.clear();
         mNews.addAll(data);
         notifyDataSetChanged();
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(int id);
     }
 }

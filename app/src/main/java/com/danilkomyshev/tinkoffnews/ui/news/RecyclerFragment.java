@@ -1,5 +1,6 @@
 package com.danilkomyshev.tinkoffnews.ui.news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.danilkomyshev.tinkoffnews.R;
+import com.danilkomyshev.tinkoffnews.ui.content.ContentActivity;
+import com.danilkomyshev.tinkoffnews.ui.content.ContentFragment;
 import com.danilkomyshev.tinkoffnews.utils.ApiUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -21,7 +24,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NewsAdapter.OnItemClickListener {
 
     private NewsAdapter mNewsAdapter;
     private SwipeRefreshLayout mRefresher;
@@ -58,7 +61,7 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         }
         mRefresher.setOnRefreshListener(this);
-        mNewsAdapter = new NewsAdapter();
+        mNewsAdapter = new NewsAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mNewsAdapter);
         onRefresh();
@@ -94,5 +97,14 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onDetach() {
         super.onDetach();
         mDisposables.dispose();
+    }
+
+    @Override
+    public void OnItemClick(int id) {
+        Intent intent = new Intent(getActivity(), ContentActivity.class);
+        Bundle args = new Bundle();
+        args.putInt(ContentFragment.CONTENT_KEY, id);
+        intent.putExtra(ContentActivity.ID_KEY, args);
+        startActivity(intent);
     }
 }

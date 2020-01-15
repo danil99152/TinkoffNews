@@ -1,4 +1,4 @@
-package com.danilkomyshev.tinkoffnews.data.model;
+package com.danilkomyshev.tinkoffnews.data.model.news;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +9,7 @@ public class PublicationDate implements Serializable {
     @SerializedName("milliseconds")
     private long milliseconds;
 
-    long getMilliseconds() {
+    public long getMilliseconds() {
         return milliseconds;
     }
 

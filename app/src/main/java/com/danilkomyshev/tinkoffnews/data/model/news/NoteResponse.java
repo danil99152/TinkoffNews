@@ -1,4 +1,4 @@
-package com.danilkomyshev.tinkoffnews.data.model;
+package com.danilkomyshev.tinkoffnews.data.model.news;
 
 import com.google.gson.annotations.SerializedName;
 

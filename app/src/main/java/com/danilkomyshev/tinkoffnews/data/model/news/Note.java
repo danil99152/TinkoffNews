@@ -1,4 +1,4 @@
-package com.danilkomyshev.tinkoffnews.data.model;
+package com.danilkomyshev.tinkoffnews.data.model.news;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Note implements Serializable {
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("text")
@@ -21,11 +21,11 @@ public class Note implements Serializable {
         this.publicationDate = publicationDate;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
