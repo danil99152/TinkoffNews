@@ -5,12 +5,13 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
-    >
+    android:layout_marginLeft="8dp">
 
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         tools:text="Тинькофф Банк начинает сотрудничество" />
 
     <TextView
@@ -20,7 +21,9 @@
         android:layout_below="@+id/tv_text"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="8dp"
-        tools:text="12 мая 2019г" />
+        tools:text="12 мая 2019г"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp" />
 
     <View
         android:layout_width="match_parent"
