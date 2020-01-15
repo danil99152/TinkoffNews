@@ -2,6 +2,7 @@ package com.danilkomyshev.tinkoffnews.ui.content;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class ContentFragment extends Fragment {
 
     private void bind(Content content) {
         mTitle.setText(content.getTitle().getText());
-        mContent.setText(content.getContent());
+        mContent.setText(Html.fromHtml(content.getContent()));
         mCreationDate.setText(DateUtils.format(content.getCreationDate().getMilliseconds()));
         mLastModificationDate.setText(DateUtils.format(content.getLastModificationDate().getMilliseconds()));
 
