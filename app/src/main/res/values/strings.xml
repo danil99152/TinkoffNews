@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TinkoffNews</string>
+    <string name="screen_title">News</string>
+    <string name="news_loaded">News loaded</string>
+</resources>
