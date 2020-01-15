@@ -2,7 +2,10 @@ package com.danilkomyshev.tinkoffnews.data.model.content;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ContentResponse {
+import java.io.Serializable;
+
+public class ContentResponse implements Serializable {
+
 
     @SerializedName("payload")
     private Content mContent;

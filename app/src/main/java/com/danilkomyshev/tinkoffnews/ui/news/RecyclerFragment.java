@@ -1,5 +1,6 @@
 package com.danilkomyshev.tinkoffnews.ui.news;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.danilkomyshev.tinkoffnews.R;
+import com.danilkomyshev.tinkoffnews.data.database.Storage;
 import com.danilkomyshev.tinkoffnews.ui.content.ContentActivity;
 import com.danilkomyshev.tinkoffnews.ui.content.ContentFragment;
 import com.danilkomyshev.tinkoffnews.utils.ApiUtils;
@@ -30,12 +32,21 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
     private SwipeRefreshLayout mRefresher;
     private CompositeDisposable mDisposables = new CompositeDisposable();
     private RecyclerView mRecyclerView;
+    private Storage mStorage;
 
     static RecyclerFragment newInstance() {
         Bundle args = new Bundle();
         RecyclerFragment fragment = new RecyclerFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Storage.StorageOwner) {
+            mStorage = ((Storage.StorageOwner) context).obtainStorage();
+        }
     }
 
     @Nullable
@@ -77,6 +88,9 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         Disposable request = ApiUtils.getNewsApi()
                 .getNews()
+                .doOnSuccess(response -> mStorage.insertNews(response))
+                .onErrorReturn(throwable ->
+                        ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ? mStorage.getNews() : null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> mRefresher.setRefreshing(true))
@@ -84,7 +98,7 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
                 .subscribe(news -> {
                     mNewsAdapter.addData(news.getNews());
                     toastMessage(getString(R.string.news_loaded));
-                });
+                }, throwable -> toastMessage("Downloading error"));
 
         mDisposables.add(request);
     }
@@ -96,6 +110,7 @@ public class RecyclerFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onDetach() {
         super.onDetach();
+        mStorage = null;
         mDisposables.dispose();
     }
 

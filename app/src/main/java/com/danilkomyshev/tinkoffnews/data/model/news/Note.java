@@ -1,18 +1,34 @@
 package com.danilkomyshev.tinkoffnews.data.model.news;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Entity
 public class Note implements Serializable {
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     @SerializedName("id")
     private int id;
+
+    @ColumnInfo(name = "name")
     @SerializedName("name")
     private String name;
+
+    @ColumnInfo(name = "text")
     @SerializedName("text")
     private String text;
+
+    @ColumnInfo(name = "publicationDate")
     @SerializedName("publicationDate")
-    private PublicationDate publicationDate;
+    @TypeConverters({PublicationDateConverter.class})
+    public PublicationDate publicationDate;
+
     @SerializedName("bankInfoTypeId")
     private Integer bankInfoTypeId;
 

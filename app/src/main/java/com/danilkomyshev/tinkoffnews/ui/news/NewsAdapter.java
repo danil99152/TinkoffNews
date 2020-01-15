@@ -18,8 +18,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
     private final List<Note> mNews = new ArrayList<>();
     private final OnItemClickListener mOnItemClickListener;
 
-    private int mId;
-
     NewsAdapter(RecyclerFragment onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }

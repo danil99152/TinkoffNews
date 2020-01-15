@@ -1,24 +1,40 @@
 package com.danilkomyshev.tinkoffnews.data.model.content;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Title {
-    @SerializedName("id")
-    private String id;
+
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    private int id;
+
+    @ColumnInfo(name = "name")
     @SerializedName("name")
     private String name;
+
+    @ColumnInfo(name = "text")
     @SerializedName("text")
     private String text;
+
     @SerializedName("publicationDate")
+    @Ignore
     private PublicationDate publicationDate;
+
     @SerializedName("bankInfoTypeId")
+    @Ignore
     private Integer bankInfoTypeId;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

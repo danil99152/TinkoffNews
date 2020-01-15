@@ -8,8 +8,11 @@ public class PublicationDate implements Serializable {
 
     @SerializedName("milliseconds")
     private long milliseconds;
+    PublicationDate(Long value) {
+        milliseconds = value;
+    }
 
-    public long getMilliseconds() {
+    long getMilliseconds() {
         return milliseconds;
     }
 

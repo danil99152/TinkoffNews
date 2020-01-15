@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.danilkomyshev.tinkoffnews.R;
+import com.danilkomyshev.tinkoffnews.data.database.Storage;
 import com.danilkomyshev.tinkoffnews.data.model.content.Content;
 import com.danilkomyshev.tinkoffnews.utils.ApiUtils;
 import com.danilkomyshev.tinkoffnews.utils.DateUtils;
@@ -26,15 +28,16 @@ public class ContentFragment extends Fragment {
 
     public static final String CONTENT_KEY = "CONTENT_KEY";
 
-    private int mId;
+    private int id;
     private TextView mTitle;
     private TextView mContent;
     private TextView mCreationDate;
     private TextView mLastModificationDate;
+    private Storage mStorage;
 
     private Disposable mDisposable;
 
-    public static ContentFragment newInstance(Bundle args) {
+    static ContentFragment newInstance(Bundle args) {
 
         ContentFragment fragment = new ContentFragment();
         fragment.setArguments(args);
@@ -45,6 +48,7 @@ public class ContentFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mStorage = context instanceof Storage.StorageOwner ? ((Storage.StorageOwner) context).obtainStorage() : null;
     }
 
     @Nullable
@@ -71,17 +75,20 @@ public class ContentFragment extends Fragment {
         }
 
         if (getArguments() != null) {
-            mId = getArguments().getInt(CONTENT_KEY);
+            id = getArguments().getInt(CONTENT_KEY);
         }
         getContent();
     }
 
     private void getContent() {
-        mDisposable = ApiUtils.getNewsApi().getContent(mId)
+        mDisposable = ApiUtils.getNewsApi().getContent(id)
                 .subscribeOn(io())
+                .doOnSuccess(contentResponse -> mStorage.insertContent(contentResponse))
+                .onErrorReturn(throwable ->
+                        ApiUtils.NETWORK_EXCEPTIONS.contains(throwable.getClass()) ? mStorage.getContent() : null)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        response -> bind(response.getContent())
+                        response -> bind(response.getContent()), throwable ->  Toast.makeText(getActivity(), "Downloading error", Toast.LENGTH_SHORT).show()
                 );
     }
 
@@ -95,6 +102,7 @@ public class ContentFragment extends Fragment {
 
     @Override
     public void onDetach() {
+        mStorage = null;
         if (mDisposable != null) {
             mDisposable.dispose();
         }

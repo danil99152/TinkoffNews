@@ -6,6 +6,10 @@ public class LastModificationDate {
     @SerializedName("milliseconds")
     private long milliseconds;
 
+    LastModificationDate(long milliseconds) {
+        this.milliseconds = milliseconds;
+    }
+
     public long getMilliseconds() {
         return milliseconds;
     }
